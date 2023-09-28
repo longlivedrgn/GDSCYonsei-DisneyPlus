@@ -63,7 +63,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - Assets/disneyPlusLaunch.gif
-    - Assets/disneyWhiteLogo.png
     - Assets/CarouselImage1.jpg
     - Assets/CarouselImage2.jpg
     - Assets/CarouselImage3.jpg
@@ -71,6 +70,13 @@ flutter:
     - Assets/CarouselImage5.jpg
     - Assets/CarouselImage6.jpg
     - Assets/CarouselImage7.jpg
+    - Assets/disneyWhiteLogo.png
+    - Assets/marvel_logo.png 
+    - Assets/ng_logo.png
+    - Assets/pixar_logo.png
+    - Assets/star_logo.png
+    - Assets/starwars_logo.png
+    - Assets/PosterImage.jpg
     # - images/a_dot_burr.jpeg
     # - images/a_dot_ham.jpeg
 

@@ -49,7 +49,6 @@ class Category extends StatelessWidget {
   Widget build(Object context) {
     return Container(
       width: width,
-      margin: const EdgeInsets.symmetric(horizontal: 1.0),
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.white,
@@ -61,17 +60,61 @@ class Category extends StatelessWidget {
           bottomRight: Radius.circular(3.0),
           bottomLeft: Radius.circular(3.0),
         ),
+      ),
+      padding: const EdgeInsets.all(10),
+      child: Image.asset(imageAssetPath),
+    );
+  }
+}
+
+class HeaderTitle extends StatelessWidget {
+  const HeaderTitle({super.key, required this.title});
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(
+        left: MediaQuery.of(context).size.width * 0.06,
+        top: MediaQuery.of(context).size.width * 0.05,
+      ),
+      alignment: Alignment
+          .centerLeft, // Align however you like (i.e .centerRight, centerLeft)
+      child: const Text(
+        "디즈니+ 최신작",
+        style: TextStyle(
+          fontSize: 18,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+}
+
+class Poster extends StatelessWidget {
+  const Poster({super.key, required this.imageAssetPath});
+  final String imageAssetPath;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.3,
+      margin: const EdgeInsets.only(
+        left: 15.0,
+      ),
+      decoration: BoxDecoration(
         image: DecorationImage(
-          image: Image.asset(imageAssetPath).image,
-          fit: BoxFit.fill,
-        ), // 정확히 뭔지는 찾아보기!...
+          image: AssetImage(imageAssetPath),
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
+  int selectedIndex = 0;
   final List<String> thumbNailItem = [
     "Assets/CarouselImage1.jpg",
     "Assets/CarouselImage2.jpg",
@@ -84,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      selectedIndex = index;
     });
   }
 
@@ -189,6 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
         title: Image.asset(
           "Assets/disneyWhiteLogo.png",
@@ -207,13 +251,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 [
                   Category(
                       width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/CarouselImage1.jpg"),
+                      imageAssetPath: "Assets/marvel_logo.png"),
                   Category(
                       width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/CarouselImage1.jpg"),
+                      imageAssetPath: "Assets/ng_logo.png"),
                   Category(
                       width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/CarouselImage1.jpg"),
+                      imageAssetPath: "Assets/pixar_logo.png"),
                 ],
               ),
               SizedBox(
@@ -223,27 +267,52 @@ class _MyHomePageState extends State<MyHomePage> {
                 [
                   Category(
                       width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/CarouselImage1.jpg"),
+                      imageAssetPath: "Assets/star_logo.png"),
                   Category(
                       width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/CarouselImage1.jpg"),
+                      imageAssetPath: "Assets/star_logo.png"),
                   Category(
                       width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/CarouselImage1.jpg"),
+                      imageAssetPath: "Assets/disneyWhiteLogo.png"),
                 ],
               ),
+              const HeaderTitle(title: "디즈니+ 최신작 "),
               Container(
-                margin: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width * 0.06,
-                  top: MediaQuery.of(context).size.width * 0.05,
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
+                height: MediaQuery.of(context).size.height * 0.23,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: const <Widget>[
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                  ],
                 ),
-                alignment: Alignment
-                    .centerLeft, // Align however you like (i.e .centerRight, centerLeft)
-                child: const Text("디즈니+ 최신작",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    )),
+              ),
+              const HeaderTitle(title: "취향 저격 컨텐츠"),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
+                height: MediaQuery.of(context).size.height * 0.23,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: const <Widget>[
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
+                  ],
+                ),
               ),
             ],
           ),
@@ -263,7 +332,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: Icon(Icons.file_download_rounded), label: ""),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
           ],
-          currentIndex: _selectedIndex,
+          currentIndex: selectedIndex,
           onTap: _onItemTapped,
         ),
       ),
