@@ -25,12 +25,10 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.black,
         splash: SizedBox(
           width: MediaQuery.of(context).size.width * 0.5,
-          // height: MediaQuery.of(context).size.width * 0.5,
           child: Image.asset(
             "Assets/disneyPlusLaunch.gif",
-            // width: MediaQuery.of(context).size.width * 0.5,
+            // ✅ width와 height를 설정하고, fill로 하면 안될까?..
             fit: BoxFit.fitWidth,
-            // height: MediaQuery.of(context).size.height * 0.5,
           ),
         ),
         splashTransition: SplashTransition.fadeTransition,
@@ -124,7 +122,7 @@ class Poster extends StatelessWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int selectedIndex = 0;
-  final List<String> thumbNailItem = [
+  final List<String> thunbNailItems = [
     "Assets/CarouselImage1.jpg",
     "Assets/CarouselImage2.jpg",
     "Assets/CarouselImage3.jpg",
@@ -132,6 +130,32 @@ class _MyHomePageState extends State<MyHomePage> {
     "Assets/CarouselImage5.jpg",
     "Assets/CarouselImage6.jpg",
     "Assets/CarouselImage7.jpg",
+  ];
+
+  final List<String> recentItems = [
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg"
+  ];
+
+  final List<String> recommendItems = [
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg",
+    "Assets/PosterImage.jpg"
   ];
 
   void _onItemTapped(int index) {
@@ -143,7 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
 // MediaQuery.of(context).size.width
   CarouselSlider mainMoviesCarouselSlider() {
     return CarouselSlider(
-      items: thumbNailItem.map(
+      items: thunbNailItems.map(
         (item) {
           return Builder(
             builder: (BuildContext context) {
@@ -279,7 +303,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       imageAssetPath: "Assets/star_logo.png"),
                   Category(
                       width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/star_logo.png"),
+                      imageAssetPath: "Assets/starwars_logo.png"),
                   Category(
                       width: MediaQuery.of(context).size.width * 0.28,
                       imageAssetPath: "Assets/disneyWhiteLogo.png"),
@@ -291,17 +315,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: MediaQuery.of(context).size.height * 0.23,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: const <Widget>[
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                  ],
+                  children: recentItems.map(
+                    (item) {
+                      return Poster(imageAssetPath: item);
+                    },
+                  ).toList(),
                 ),
               ),
               const HeaderTitle(title: "취향 저격 컨텐츠"),
@@ -310,17 +328,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: MediaQuery.of(context).size.height * 0.23,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: const <Widget>[
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                    Poster(imageAssetPath: "Assets/PosterImage.jpg"),
-                  ],
+                  children: recommendItems.map(
+                    (item) {
+                      return Poster(imageAssetPath: item);
+                    },
+                  ).toList(),
                 ),
               ),
             ],
