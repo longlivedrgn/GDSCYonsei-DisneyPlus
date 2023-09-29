@@ -22,8 +22,17 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: AnimatedSplashScreen(
-        backgroundColor: Theme.of(context).primaryColor,
-        splash: Image.asset("Assets/disneyPlusLaunch.gif"),
+        backgroundColor: Colors.black,
+        splash: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.5,
+          // height: MediaQuery.of(context).size.width * 0.5,
+          child: Image.asset(
+            "Assets/disneyPlusLaunch.gif",
+            // width: MediaQuery.of(context).size.width * 0.5,
+            fit: BoxFit.fitWidth,
+            // height: MediaQuery.of(context).size.height * 0.5,
+          ),
+        ),
         splashTransition: SplashTransition.fadeTransition,
         nextScreen: const MyHomePage(),
       ),
@@ -80,9 +89,9 @@ class HeaderTitle extends StatelessWidget {
       ),
       alignment: Alignment
           .centerLeft, // Align however you like (i.e .centerRight, centerLeft)
-      child: const Text(
-        "디즈니+ 최신작",
-        style: TextStyle(
+      child: Text(
+        title,
+        style: const TextStyle(
           fontSize: 18,
           color: Colors.white,
           fontWeight: FontWeight.bold,
