@@ -74,8 +74,7 @@ class HeaderTitle extends StatelessWidget {
         left: MediaQuery.of(context).size.width * 0.06,
         top: MediaQuery.of(context).size.width * 0.05,
       ),
-      alignment: Alignment
-          .centerLeft, // Align however you like (i.e .centerRight, centerLeft)
+      alignment: Alignment.centerLeft,
       child: Text(
         title,
         style: const TextStyle(
@@ -227,14 +226,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Image.asset(
-          "Assets/mainDisneyLogo.png",
-          width: 100, // 하드코딩된 거 변경하기!~!~
-          height: 100,
-        ),
-      ),
+          centerTitle: true,
+          backgroundColor: Theme.of(context).primaryColor,
+          title: Image.asset("Assets/mainDisneyLogo.png",
+              width: MediaQuery.of(context).size.width * 0.3)),
       body: Container(
         height: double.infinity,
         color: Theme.of(context).primaryColor,
@@ -301,23 +296,19 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(
-          canvasColor: Theme.of(context).colorScheme.primary,
-        ),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.white,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: ""),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.file_download_rounded), label: ""),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
-          ],
-          currentIndex: selectedIndex,
-          onTap: _onItemTapped,
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.white,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: ""),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.file_download_rounded), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
+        ],
+        currentIndex: selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }
