@@ -13,7 +13,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         primaryColor: const Color(0xff4a5275),
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff131a4a)),
@@ -32,16 +31,8 @@ class MyApp extends StatelessWidget {
         splashTransition: SplashTransition.fadeTransition,
         nextScreen: const MyHomePage(),
       ),
-      // const MyHomePage(title: 'Happy'),
     );
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class Category extends StatelessWidget {
@@ -118,9 +109,16 @@ class Poster extends StatelessWidget {
   }
 }
 
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   int selectedIndex = 0;
-  final List<String> thunbNailItems = [
+  final List<String> thumbNailItems = [
     "Assets/CarouselImage1.jpg",
     "Assets/CarouselImage2.jpg",
     "Assets/CarouselImage3.jpg",
@@ -165,36 +163,20 @@ class _MyHomePageState extends State<MyHomePage> {
 // MediaQuery.of(context).size.width
   CarouselSlider mainMoviesCarouselSlider() {
     return CarouselSlider(
-      items: thunbNailItems.map(
+      items: thumbNailItems.map(
         (item) {
-          return Builder(
-            builder: (BuildContext context) {
-              return SizedBox(
-                width: MediaQuery.of(context).size.width,
-                // margin: const EdgeInsets.symmetric(horizontal: 10),
-                // decoration: const BoxDecoration(color: Colors.amber),
-                child: AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: Image.asset(item),
-                ),
-              );
-            },
+          return SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.asset(item),
+            ),
           );
         },
       ).toList(),
       options: CarouselOptions(
-        // // Set the height of each carousel item
-        // height: 400,
-
-        // Set the size of each carousel item
-        // if height is not specified
         // ✅ 아래와 같이 aspect ratio를 맞췄는데도 ratio가 제대로 맞춰서 나오지 않는다.
         aspectRatio: 16 / 9,
-
-        // Set how much space current item widget
-        // will occupy from current page view
-        //
-        // viewportFraction: 0.8,
 
         // Set the initial page
         initialPage: 0,
@@ -212,10 +194,6 @@ class _MyHomePageState extends State<MyHomePage> {
         // in current page utill it moves on to the next
         autoPlayInterval: const Duration(seconds: 3),
 
-        // // Set the duration of carousel slider
-        // // scrolling to the next page
-        // autoPlayAnimationDuration: const Duration(milliseconds: 800),
-
         // Set the carousel slider animation
         autoPlayCurve: Curves.fastOutSlowIn,
 
@@ -232,16 +210,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  // categories,
-  // Category(
-  //     width: MediaQuery.of(context).size.width * 0.28,
-  //     imageAssetPath: "Assets/CarouselImage1.jpg"),
-  // Category(
-  //     width: MediaQuery.of(context).size.width * 0.28,
-  //     imageAssetPath: "Assets/CarouselImage1.jpg"),
-  // Category(
-  //     width: MediaQuery.of(context).size.width * 0.28,
-  //     imageAssetPath: "Assets/CarouselImage1.jpg"),
   Container categoriesContainer(List<Category> categories) {
     return Container(
       height: MediaQuery.of(context).size.width * 0.15,
@@ -249,7 +217,7 @@ class _MyHomePageState extends State<MyHomePage> {
           horizontal: MediaQuery.of(context).size.width * 0.05),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: categories,
       ),
     );
@@ -262,7 +230,7 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
         title: Image.asset(
-          "Assets/disneyWhiteLogo.png",
+          "Assets/mainDisneyLogo.png",
           width: 100, // 하드코딩된 거 변경하기!~!~
           height: 100,
         ),
