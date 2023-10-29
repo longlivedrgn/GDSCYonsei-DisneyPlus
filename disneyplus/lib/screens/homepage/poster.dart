@@ -10,8 +10,7 @@ class Poster extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
+        Navigator.of(context, rootNavigator: true).push(
           MaterialPageRoute(
             builder: (context) => DetailPage(
               movieInformation: MovieInformation(
