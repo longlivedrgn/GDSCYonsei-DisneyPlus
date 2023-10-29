@@ -1,5 +1,5 @@
-import 'dart:math';
-
+import 'package:disneyplus/screens/detailpage/detailpage.dart';
+import 'package:disneyplus/screens/detailpage/models/movie_information.dart';
 import 'package:flutter/material.dart';
 
 class Poster extends StatelessWidget {
@@ -9,7 +9,17 @@ class Poster extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => debugPrint("뭔데!.."),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailPage(
+              movieInformation: MovieInformation(
+                  "라라랜드", 2023, "1시간 30분", "로맨스", imageAssetPath),
+            ),
+          ),
+        );
+      },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.3,
         margin: const EdgeInsets.only(
