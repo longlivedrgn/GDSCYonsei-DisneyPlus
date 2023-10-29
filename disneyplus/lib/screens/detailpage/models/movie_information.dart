@@ -1,10 +1,17 @@
 class MovieInformation {
-  String movieName;
+  String name;
   int openDate;
   String runningTime;
   String genre;
-  String movieImageURL;
+  String imageURL;
+  String summary;
 
-  MovieInformation(this.movieName, this.openDate, this.runningTime, this.genre,
-      this.movieImageURL);
+  MovieInformation(
+    this.name,
+    this.openDate,
+    this.runningTime,
+    this.genre,
+    this.imageURL,
+    this.summary,
+  );
 }

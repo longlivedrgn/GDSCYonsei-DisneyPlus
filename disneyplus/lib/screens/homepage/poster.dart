@@ -14,7 +14,13 @@ class Poster extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => DetailPage(
               movieInformation: MovieInformation(
-                  "라라랜드", 2023, "1시간 30분", "로맨스", imageAssetPath),
+                "라라랜드",
+                2023,
+                "1시간 30분",
+                "로맨스",
+                imageAssetPath,
+                "헐리우드 배우지망생 미아와 재즈바를 차리는게 꿈인 피아노 연주자 세바스찬은 우연히 만나 서로의 꿈을 응원하는 연인 사이가 된다.",
+              ),
             ),
           ),
         );
