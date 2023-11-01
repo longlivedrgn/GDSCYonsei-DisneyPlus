@@ -67,6 +67,7 @@ class DetailPage extends StatelessWidget {
                   DetailButton(
                     text: "관심 콘텐츠",
                     icon: Icons.add,
+                    movieURL: ,
                   ),
                   SizedBox(width: 50), // give it width
                   DetailButton(
