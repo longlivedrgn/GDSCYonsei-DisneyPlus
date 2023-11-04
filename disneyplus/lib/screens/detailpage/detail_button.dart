@@ -1,4 +1,3 @@
-import 'package:disneyplus/screens/playerpage/movie_player_page.dart';
 import 'package:flutter/material.dart';
 
 class DetailButton extends StatelessWidget {
@@ -15,13 +14,7 @@ class DetailButton extends StatelessWidget {
     return Column(
       children: [
         IconButton(
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => MoviePlayerPage(youtubeURL: movieURL),
-              ),
-            );
-          },
+          onPressed: () {},
           icon: Icon(
             icon,
             size: 40,

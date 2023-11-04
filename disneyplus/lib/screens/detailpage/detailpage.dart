@@ -25,6 +25,14 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Colors.white, //change your color here
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Container(
         height: double.infinity,
         color: Theme.of(context).primaryColor,
@@ -67,7 +75,6 @@ class DetailPage extends StatelessWidget {
                   DetailButton(
                     text: "관심 콘텐츠",
                     icon: Icons.add,
-                    movieURL: ,
                   ),
                   SizedBox(width: 50), // give it width
                   DetailButton(
