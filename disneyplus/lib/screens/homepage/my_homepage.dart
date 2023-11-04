@@ -49,12 +49,6 @@ class _MyHomePageState extends State<MyHomePage> {
     "Assets/PosterImage.jpg"
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
-
 // MediaQuery.of(context).size.width
   CarouselSlider mainMoviesCarouselSlider() {
     return CarouselSlider(
@@ -120,91 +114,70 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Theme.of(context).primaryColor,
-          title: Image.asset("Assets/mainDisneyLogo.png",
-              width: MediaQuery.of(context).size.width * 0.3)),
-      body: Container(
-        height: double.infinity,
-        color: Theme.of(context).primaryColor,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              mainMoviesCarouselSlider(),
-              categoriesContainer(
-                [
-                  Category(
-                      width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/marvel_logo.png"),
-                  Category(
-                      width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/ng_logo.png"),
-                  Category(
-                      width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/pixar_logo.png"),
-                ],
+    return Container(
+      height: double.infinity,
+      color: Theme.of(context).primaryColor,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            mainMoviesCarouselSlider(),
+            categoriesContainer(
+              [
+                Category(
+                    width: MediaQuery.of(context).size.width * 0.28,
+                    imageAssetPath: "Assets/marvel_logo.png"),
+                Category(
+                    width: MediaQuery.of(context).size.width * 0.28,
+                    imageAssetPath: "Assets/ng_logo.png"),
+                Category(
+                    width: MediaQuery.of(context).size.width * 0.28,
+                    imageAssetPath: "Assets/pixar_logo.png"),
+              ],
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.width * 0.03,
+            ),
+            categoriesContainer(
+              [
+                Category(
+                    width: MediaQuery.of(context).size.width * 0.28,
+                    imageAssetPath: "Assets/star_logo.png"),
+                Category(
+                    width: MediaQuery.of(context).size.width * 0.28,
+                    imageAssetPath: "Assets/starwars_logo.png"),
+                Category(
+                    width: MediaQuery.of(context).size.width * 0.28,
+                    imageAssetPath: "Assets/disneyWhiteLogo.png"),
+              ],
+            ),
+            const HeaderTitle(title: "디즈니+ 최신작 "),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 10.0),
+              height: MediaQuery.of(context).size.height * 0.23,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: recentItems.map(
+                  (item) {
+                    return Poster(imageAssetPath: item);
+                  },
+                ).toList(),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.width * 0.03,
+            ),
+            const HeaderTitle(title: "취향 저격 컨텐츠"),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 10.0),
+              height: MediaQuery.of(context).size.height * 0.23,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: recommendItems.map(
+                  (item) {
+                    return Poster(imageAssetPath: item);
+                  },
+                ).toList(),
               ),
-              categoriesContainer(
-                [
-                  Category(
-                      width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/star_logo.png"),
-                  Category(
-                      width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/starwars_logo.png"),
-                  Category(
-                      width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/disneyWhiteLogo.png"),
-                ],
-              ),
-              const HeaderTitle(title: "디즈니+ 최신작 "),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
-                height: MediaQuery.of(context).size.height * 0.23,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: recentItems.map(
-                    (item) {
-                      return Poster(imageAssetPath: item);
-                    },
-                  ).toList(),
-                ),
-              ),
-              const HeaderTitle(title: "취향 저격 컨텐츠"),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
-                height: MediaQuery.of(context).size.height * 0.23,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: recommendItems.map(
-                    (item) {
-                      return Poster(imageAssetPath: item);
-                    },
-                  ).toList(),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.white,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: ""),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.file_download_rounded), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
-        ],
-        currentIndex: selectedIndex,
-        onTap: _onItemTapped,
       ),
     );
   }
