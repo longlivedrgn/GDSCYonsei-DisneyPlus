@@ -1,4 +1,5 @@
 import 'package:disneyplus/screens/detailpage/models/movie_information.dart';
+import 'package:disneyplus/screens/save_half_modal.dart';
 import 'package:flutter/material.dart';
 
 class SavePage extends StatefulWidget {
@@ -13,6 +14,12 @@ class _SavePageState extends State<SavePage> {
     MovieInformation("크루엘라", "2시간 17분", "Assets/CarouselImage1.jpg",
         size: "890MB"),
     MovieInformation("엘리멘탈", "1시간 41분", "Assets/CarouselImage2.jpg",
+        size: "721MB"),
+    MovieInformation("GDSC", "1시간 41분", "Assets/CarouselImage3.jpg",
+        size: "721MB"),
+    MovieInformation("YONSEI", "1시간 41분", "Assets/CarouselImage4.jpg",
+        size: "721MB"),
+    MovieInformation("MOBILE", "1시간 41분", "Assets/CarouselImage5.jpg",
         size: "721MB"),
   ];
 
@@ -53,7 +60,23 @@ class _SavePageState extends State<SavePage> {
           Flexible(
             flex: 1,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return SaveHalfModal(
+                      context: context,
+                      movieName: movie.name,
+                      onTapped: () {
+                        setState(() {
+                          savedMovieInformation.removeWhere(
+                              (movieInfo) => movieInfo.name == movie.name);
+                        });
+                      },
+                    );
+                  },
+                );
+              },
               icon: const IconTheme(
                 data: IconThemeData(
                   color: Colors.white,
