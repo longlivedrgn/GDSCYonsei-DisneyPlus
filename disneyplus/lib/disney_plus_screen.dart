@@ -13,7 +13,7 @@ class _DisneyPlusScreenStae extends State<DisneyPlusScreen> {
   final List<Widget> widgetOptions = <Widget>[
     const MyHomePage(),
     const SavePage(),
-    const MyHomePage(),
+    const SavePage(),
     const MyHomePage(),
   ];
 
@@ -29,12 +29,7 @@ class _DisneyPlusScreenStae extends State<DisneyPlusScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Theme.of(context).primaryColor,
-          title: Image.asset("Assets/mainDisneyLogo.png",
-              width: MediaQuery.of(context).size.width * 0.3)),
-      body: SafeArea(child: widgetOptions.elementAt(selectedIndex)),
+      body: widgetOptions.elementAt(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         type: BottomNavigationBarType.fixed,
