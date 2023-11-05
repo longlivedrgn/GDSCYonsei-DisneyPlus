@@ -217,7 +217,7 @@ class _DetailPageState extends State<DetailPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Text(
-                  widget.movieInformation.summary,
+                  widget.movieInformation.summary!,
                   style: const TextStyle(color: Colors.white, fontSize: 17),
                 ),
               ),
