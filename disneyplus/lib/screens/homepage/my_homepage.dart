@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:disneyplus/screens/detailpage/models/movie_information.dart';
 import 'package:flutter/material.dart';
 import 'category.dart';
 import 'poster.dart';
@@ -12,6 +14,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  //READ 컬렉션 내 모든 데이터를 가져올때
+  Future<List<MovieInformation>> getMovies() async {
+    CollectionReference<Map<String, dynamic>> collectionReference =
+        FirebaseFirestore.instance.collection("movies");
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await collectionReference.get();
+
+    List<MovieInformation> movies = [];
+    for (var doc in querySnapshot.docs) {
+      MovieInformation movieInformation =
+          MovieInformation.fromQuerySnapshot(doc);
+      movies.add(movieInformation);
+    }
+    return movies;
+  }
+
   int selectedIndex = 0;
   final List<String> thumbNailItems = [
     "Assets/CarouselImage1.jpg",
@@ -120,72 +138,83 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).primaryColor,
           title: Image.asset("Assets/mainDisneyLogo.png",
               width: MediaQuery.of(context).size.width * 0.3)),
-      body: Container(
-        height: double.infinity,
-        color: Theme.of(context).primaryColor,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              mainMoviesCarouselSlider(),
-              categoriesContainer(
-                [
-                  Category(
-                      width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/marvel_logo.png"),
-                  Category(
-                      width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/ng_logo.png"),
-                  Category(
-                      width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/pixar_logo.png"),
-                ],
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.width * 0.03,
-              ),
-              categoriesContainer(
-                [
-                  Category(
-                      width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/star_logo.png"),
-                  Category(
-                      width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/starwars_logo.png"),
-                  Category(
-                      width: MediaQuery.of(context).size.width * 0.28,
-                      imageAssetPath: "Assets/disneyWhiteLogo.png"),
-                ],
-              ),
-              const HeaderTitle(title: "디즈니+ 최신작 "),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
-                height: MediaQuery.of(context).size.height * 0.23,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: recentItems.map(
-                    (item) {
-                      return Poster(imageAssetPath: item);
-                    },
-                  ).toList(),
+      body: FutureBuilder<List<MovieInformation>>(
+          future: getMovies(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator(); // 로딩 중일 때 표시할 위젯
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              List<MovieInformation> movies = snapshot.data ?? [];
+              return Container(
+                height: double.infinity,
+                color: Theme.of(context).primaryColor,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      mainMoviesCarouselSlider(),
+                      categoriesContainer(
+                        [
+                          Category(
+                              width: MediaQuery.of(context).size.width * 0.28,
+                              imageAssetPath: "Assets/marvel_logo.png"),
+                          Category(
+                              width: MediaQuery.of(context).size.width * 0.28,
+                              imageAssetPath: "Assets/ng_logo.png"),
+                          Category(
+                              width: MediaQuery.of(context).size.width * 0.28,
+                              imageAssetPath: "Assets/pixar_logo.png"),
+                        ],
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.width * 0.03,
+                      ),
+                      categoriesContainer(
+                        [
+                          Category(
+                              width: MediaQuery.of(context).size.width * 0.28,
+                              imageAssetPath: "Assets/star_logo.png"),
+                          Category(
+                              width: MediaQuery.of(context).size.width * 0.28,
+                              imageAssetPath: "Assets/starwars_logo.png"),
+                          Category(
+                              width: MediaQuery.of(context).size.width * 0.28,
+                              imageAssetPath: "Assets/disneyWhiteLogo.png"),
+                        ],
+                      ),
+                      const HeaderTitle(title: "디즈니+ 최신작 "),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10.0),
+                        height: MediaQuery.of(context).size.height * 0.23,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: recentItems.map(
+                            (item) {
+                              return Poster(imageAssetPath: item);
+                            },
+                          ).toList(),
+                        ),
+                      ),
+                      const HeaderTitle(title: "취향 저격 컨텐츠"),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10.0),
+                        height: MediaQuery.of(context).size.height * 0.23,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: movies.map(
+                            (item) {
+                              return Poster(imageAssetPath: item.imageURL!);
+                            },
+                          ).toList(),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const HeaderTitle(title: "취향 저격 컨텐츠"),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
-                height: MediaQuery.of(context).size.height * 0.23,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: recommendItems.map(
-                    (item) {
-                      return Poster(imageAssetPath: item);
-                    },
-                  ).toList(),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+              );
+            }
+          }),
     );
   }
 }

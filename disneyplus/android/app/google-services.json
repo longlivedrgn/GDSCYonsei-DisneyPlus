@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "67999091410",
+    "project_id": "disenyplus-a1af8",
+    "storage_bucket": "disenyplus-a1af8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67999091410:android:a49c8ce49bb834e714bb0b",
+        "android_client_info": {
+          "package_name": "com.example.disneyplus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDy09q5I0SVdvcOf9IOhsv1zKIr0l6e1gY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

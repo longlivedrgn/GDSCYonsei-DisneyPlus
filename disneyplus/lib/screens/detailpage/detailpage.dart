@@ -24,7 +24,7 @@ class _DetailPageState extends State<DetailPage> {
           builder: (BuildContext context) {
             return SaveHalfModal(
               context: context,
-              movieName: widget.movieInformation.name,
+              movieName: widget.movieInformation.name!,
               onTapped: () {
                 setState(() {
                   isSaved = false;
@@ -46,7 +46,7 @@ class _DetailPageState extends State<DetailPage> {
       // ),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(widget.movieInformation.imageURL),
+          image: AssetImage(widget.movieInformation.imageURL!),
           fit: BoxFit.cover,
         ),
       ),
