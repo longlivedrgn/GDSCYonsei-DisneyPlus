@@ -4,8 +4,8 @@ import 'package:disneyplus/screens/detailpage/models/movie_information.dart';
 import 'package:flutter/material.dart';
 
 class Poster extends StatelessWidget {
-  const Poster({super.key, required this.imageAssetPath});
-  final String imageAssetPath;
+  const Poster({super.key, required this.movie});
+  final MovieInformation movie;
 
   @override
   Widget build(BuildContext context) {
@@ -13,17 +13,7 @@ class Poster extends StatelessWidget {
       onTap: () {
         Navigator.of(context, rootNavigator: true).push(
           MaterialPageRoute(
-            builder: (context) => DetailPage(
-              movieInformation: MovieInformation(
-                "라라랜드",
-                "1시간 30분",
-                imageAssetPath,
-                2023,
-                "로맨스",
-                "150MB",
-                "헐리우드 배우지망생 미아와 재즈바를 차리는게 꿈인 피아노 연주자 세바스찬은 우연히 만나 서로의 꿈을 응원하는 연인 사이가 된다.",
-              ),
-            ),
+            builder: (context) => DetailPage(movieInformation: movie),
           ),
         );
       },
@@ -34,7 +24,7 @@ class Poster extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(imageAssetPath),
+            image: AssetImage(movie.imageURL!),
             fit: BoxFit.cover,
           ),
         ),

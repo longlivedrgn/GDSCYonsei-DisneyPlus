@@ -189,9 +189,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: MediaQuery.of(context).size.height * 0.23,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
-                          children: recentItems.map(
+                          children: movies.map(
                             (item) {
-                              return Poster(imageAssetPath: item);
+                              return Poster(movie: item);
                             },
                           ).toList(),
                         ),
@@ -204,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           scrollDirection: Axis.horizontal,
                           children: movies.map(
                             (item) {
-                              return Poster(imageAssetPath: item.imageURL!);
+                              return Poster(movie: item);
                             },
                           ).toList(),
                         ),

@@ -11,8 +11,17 @@ class SavePage extends StatefulWidget {
 
 class _SavePageState extends State<SavePage> {
   List<MovieInformation> savedMovieInformation = [
-    MovieInformation("크루엘라", "2시간 17분", "Assets/CarouselImage1.jpg", 2023,
-        "로맨스", "170MB", "잘가라!!!")
+    MovieInformation(
+      "크루엘라",
+      "2시간 17분",
+      "Assets/CarouselImage1.jpg",
+      "asdfsf",
+      false,
+      2023,
+      "로맨스",
+      "170MB",
+      "잘가라!!!",
+    )
   ];
 
   Padding savedMovieCell(MovieInformation movie) {

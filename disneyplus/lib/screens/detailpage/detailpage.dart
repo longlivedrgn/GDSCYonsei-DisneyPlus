@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:disneyplus/screens/detailpage/detail_button.dart';
 import 'package:disneyplus/screens/save_half_modal.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +13,17 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  bool isSaved = false;
-
   void updateSaveButton() {
     setState(() {
-      if (isSaved == false) {
-        isSaved = !isSaved;
+      if (widget.movieInformation.isSaved == false) {
+        FirebaseFirestore.instance
+            .collection("movies")
+            .doc(widget.movieInformation.docID)
+            .update(
+          {
+            "isSaved": true,
+          },
+        );
       } else {
         showModalBottomSheet(
           context: context,
@@ -26,9 +32,18 @@ class _DetailPageState extends State<DetailPage> {
               context: context,
               movieName: widget.movieInformation.name!,
               onTapped: () {
-                setState(() {
-                  isSaved = false;
-                });
+                setState(
+                  () {
+                    FirebaseFirestore.instance
+                        .collection("movies")
+                        .doc(widget.movieInformation.docID)
+                        .update(
+                      {
+                        "isSaved": !widget.movieInformation.isSaved!,
+                      },
+                    );
+                  },
+                );
               },
             );
           },
@@ -117,7 +132,9 @@ class _DetailPageState extends State<DetailPage> {
                   const SizedBox(width: 50), // give it width
                   DetailButton(
                     text: "저장",
-                    icon: isSaved ? Icons.download_done : Icons.download,
+                    icon: widget.movieInformation.isSaved!
+                        ? Icons.download_done
+                        : Icons.download,
                     triggerAction: updateSaveButton,
                   )
                 ],

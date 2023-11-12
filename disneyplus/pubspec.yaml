@@ -81,6 +81,14 @@ flutter:
     - Assets/star_logo.png
     - Assets/starwars_logo.png
     - Assets/PosterImage.jpg
+    - Assets/PosterImage0.jpg
+    - Assets/PosterImage1.jpeg
+    - Assets/PosterImage2.jpeg
+    - Assets/PosterImage3.jpeg
+    - Assets/PosterImage4.jpeg
+    - Assets/PosterImage5.jpeg
+    - Assets/PosterImage6.jpeg
+
     # - images/a_dot_burr.jpeg
     # - images/a_dot_ham.jpeg
 
