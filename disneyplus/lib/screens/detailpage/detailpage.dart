@@ -24,6 +24,7 @@ class _DetailPageState extends State<DetailPage> {
             "isSaved": true,
           },
         );
+        widget.movieInformation.isSaved = true;
       } else {
         showModalBottomSheet(
           context: context,
@@ -42,6 +43,7 @@ class _DetailPageState extends State<DetailPage> {
                         "isSaved": !widget.movieInformation.isSaved!,
                       },
                     );
+                    widget.movieInformation.isSaved = false;
                   },
                 );
               },
