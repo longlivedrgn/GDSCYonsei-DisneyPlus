@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:disneyplus/screens/detailpage/detail_button.dart';
+import 'package:disneyplus/screens/detailpage/video_player.dart';
 import 'package:disneyplus/screens/save_half_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,16 +17,20 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  XFile? imageURL; //이미지를 담을 변수 선언
+  late File videoFile; //이미지를 담을 변수 선언
   ImagePicker picker = ImagePicker();
 
   Future getImage(ImageSource imageSource) async {
     //pickedFile에 ImagePicker로 가져온 이미지가 담긴다.
-    final XFile? pickedFile = await picker.pickVideo(source: imageSource);
+    XFile? pickedFile = await picker.pickVideo(source: imageSource);
     if (pickedFile != null) {
-      setState(() {
-        imageURL = XFile(pickedFile.path); //가져온 이미지를 _image에 저장
-      });
+      setState(
+        () {
+          videoFile = File(pickedFile.path); //가져온 이미지를 _image에 저장
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => VideoPlayerWidget(videoFile: videoFile)));
+        },
+      );
     }
   }
 

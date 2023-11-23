@@ -41,32 +41,6 @@ class _MyHomePageState extends State<MyHomePage> {
     "Assets/CarouselImage7.jpg",
   ];
 
-  final List<String> recentItems = [
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg"
-  ];
-
-  final List<String> recommendItems = [
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg",
-    "Assets/PosterImage.jpg"
-  ];
-
 // MediaQuery.of(context).size.width
   CarouselSlider mainMoviesCarouselSlider() {
     return CarouselSlider(
