@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:disneyplus/screens/detailpage/detail_button.dart';
 import 'package:disneyplus/screens/save_half_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'models/movie_information.dart';
 
 class DetailPage extends StatefulWidget {
@@ -13,6 +14,19 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  XFile? imageURL; //이미지를 담을 변수 선언
+  ImagePicker picker = ImagePicker();
+
+  Future getImage(ImageSource imageSource) async {
+    //pickedFile에 ImagePicker로 가져온 이미지가 담긴다.
+    final XFile? pickedFile = await picker.pickVideo(source: imageSource);
+    if (pickedFile != null) {
+      setState(() {
+        imageURL = XFile(pickedFile.path); //가져온 이미지를 _image에 저장
+      });
+    }
+  }
+
   void updateSaveButton() {
     setState(() {
       if (widget.movieInformation.isSaved == false) {
@@ -129,7 +143,9 @@ class _DetailPageState extends State<DetailPage> {
                   DetailButton(
                     text: "예고편",
                     icon: Icons.movie,
-                    triggerAction: () {},
+                    triggerAction: () {
+                      getImage(ImageSource.gallery);
+                    },
                   ),
                   const SizedBox(width: 50), // give it width
                   DetailButton(
