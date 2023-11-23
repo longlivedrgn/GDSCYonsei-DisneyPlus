@@ -1,6 +1,7 @@
 import 'package:disneyplus/screens/detailpage/models/movie_information.dart';
 import 'package:disneyplus/screens/save_half_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SavePage extends StatefulWidget {
   const SavePage({super.key});
@@ -10,19 +11,35 @@ class SavePage extends StatefulWidget {
 }
 
 class _SavePageState extends State<SavePage> {
-  List<MovieInformation> savedMovieInformation = [
-    MovieInformation(
-      "크루엘라",
-      "2시간 17분",
-      "Assets/CarouselImage1.jpg",
-      "asdfsf",
-      false,
-      2023,
-      "로맨스",
-      "170MB",
-      "잘가라!!!",
-    )
-  ];
+  late List<MovieInformation> savedMovies;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchSavedMovies();
+  }
+
+  Future<void> fetchSavedMovies() async {
+    List<MovieInformation> movies = await getSavedMovies();
+    setState(() {
+      savedMovies = movies;
+    });
+  }
+
+  Future<List<MovieInformation>> getSavedMovies() async {
+    CollectionReference<Map<String, dynamic>> collectionReference =
+        FirebaseFirestore.instance.collection("movies");
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await collectionReference.where("isSaved", isEqualTo: true).get();
+
+    List<MovieInformation> movies = [];
+    for (var doc in querySnapshot.docs) {
+      MovieInformation movieInformation =
+          MovieInformation.fromQuerySnapshot(doc);
+      movies.add(movieInformation);
+    }
+    return movies;
+  }
 
   Padding savedMovieCell(MovieInformation movie) {
     return Padding(
@@ -70,8 +87,16 @@ class _SavePageState extends State<SavePage> {
                       movieName: movie.name!,
                       onTapped: () {
                         setState(() {
-                          savedMovieInformation.removeWhere(
+                          savedMovies.removeWhere(
                               (movieInfo) => movieInfo.name == movie.name);
+                          FirebaseFirestore.instance
+                              .collection("movies")
+                              .doc(movie.docID)
+                              .update(
+                            {
+                              "isSaved": !movie.isSaved!,
+                            },
+                          );
                         });
                       },
                     );
@@ -111,28 +136,41 @@ class _SavePageState extends State<SavePage> {
           ),
         ],
       ),
-      body: SizedBox(
-        height: double.infinity,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "저장한 콘텐츠",
-                  style: TextStyle(
-                    fontSize: 35,
-                    color: Colors.white,
+      body: FutureBuilder<List<MovieInformation>>(
+        future: getSavedMovies(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator(); // 로딩 중일 때 표시할 위젯
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            // List<MovieInformation> movies = snapshot.data ?? [];
+
+            return SizedBox(
+              height: double.infinity,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "저장한 콘텐츠",
+                        style: TextStyle(
+                          fontSize: 35,
+                          color: Colors.white,
+                        ),
+                      ),
+                      ...savedMovies.map((item) {
+                        return savedMovieCell(item);
+                      }).toList(),
+                    ],
                   ),
                 ),
-                ...savedMovieInformation.map((item) {
-                  return savedMovieCell(item);
-                }).toList(),
-              ],
-            ),
-          ),
-        ),
+              ),
+            );
+          }
+        },
       ),
     );
   }

@@ -123,13 +123,13 @@ class _DetailPageState extends State<DetailPage> {
                   DetailButton(
                     text: "관심 콘텐츠",
                     icon: Icons.add,
-                    triggerAction: updateSaveButton,
+                    triggerAction: () {},
                   ),
                   const SizedBox(width: 50), // give it width
                   DetailButton(
                     text: "예고편",
                     icon: Icons.movie,
-                    triggerAction: updateSaveButton,
+                    triggerAction: () {},
                   ),
                   const SizedBox(width: 50), // give it width
                   DetailButton(
