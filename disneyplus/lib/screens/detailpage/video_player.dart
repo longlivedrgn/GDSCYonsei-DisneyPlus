@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:auto_orientation/auto_orientation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidget extends StatefulWidget {
@@ -23,6 +25,20 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       ..initialize().then((_) => controller.play());
   }
 
+  Future setLandscape() async {
+    // hide overlays statusbar
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+  }
+
+  Future setAllOrientations() async {
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);
+    await SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+  }
+
   @override
   void dispose() {
     controller.dispose();
@@ -30,30 +46,74 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   }
 
   @override
-  Widget build(BuildContext) => Container(
-        alignment: Alignment.topCenter,
-        child: buildVideo(),
+  Widget build(context) => Scaffold(
+        appBar: AppBar(
+          iconTheme: const IconThemeData(
+            color: Colors.white, //change your color here
+          ),
+          backgroundColor: Theme.of(context).primaryColor,
+          elevation: 0,
+        ),
+        body: Container(
+          alignment: Alignment.topCenter,
+          child: buildVideo(),
+        ),
       );
 
-  Widget buildVideo() => Stack(
-        children: <Widget>[
-          buildVideoPlayer(),
-          Positioned.fill(child: BasicOverlayWidget(controller: controller)),
-        ],
+  Widget buildVideo() => OrientationBuilder(builder: (context, orientation) {
+        final isPortrait = orientation == Orientation.portrait;
+        return Stack(
+          fit: isPortrait ? StackFit.loose : StackFit.expand,
+          children: <Widget>[
+            buildVideoPlayer(),
+            Positioned.fill(
+              child: BasicOverlayWidget(
+                controller: controller,
+                onClickedFullScreen: () {
+                  if (isPortrait) {
+                    AutoOrientation.landscapeRightMode();
+                  } else {
+                    AutoOrientation.portraitUpMode();
+                  }
+                },
+              ),
+            ),
+          ],
+        );
+      });
+
+  Widget buildVideoPlayer() => buildFullScreen(
+        child: AspectRatio(
+          aspectRatio: controller.value.aspectRatio,
+          child: VideoPlayer(controller),
+        ),
       );
 
-  Widget buildVideoPlayer() => AspectRatio(
-        aspectRatio: controller.value.aspectRatio,
-        child: VideoPlayer(controller),
-      );
+  Widget buildFullScreen({@required child}) {
+    if (controller.value.isInitialized) {
+      final size = controller.value.size;
+      final width = size.width;
+      final height = size.height;
+
+      if (width > 0 && height > 0) {
+        return FittedBox(
+          fit: BoxFit.fill,
+          child: SizedBox(width: width, height: height, child: child),
+        );
+      }
+    }
+    return Container(); // 또는 빈 컨테이너를 반환하거나 오류 처리를 수행합니다.
+  }
 }
 
 class BasicOverlayWidget extends StatelessWidget {
   final VideoPlayerController controller;
+  final VoidCallback onClickedFullScreen;
 
   const BasicOverlayWidget({
     super.key,
     required this.controller,
+    required this.onClickedFullScreen,
   });
 
   @override
@@ -68,7 +128,18 @@ class BasicOverlayWidget extends StatelessWidget {
               bottom: 0,
               left: 0,
               right: 0,
-              child: buildIndicator(),
+              child: Row(children: [
+                Expanded(child: buildIndicator()),
+                const SizedBox(width: 12),
+                GestureDetector(
+                  onTap: onClickedFullScreen,
+                  child: const Icon(
+                    Icons.fullscreen,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                ),
+              ]),
             ),
           ],
         ),

@@ -27,7 +27,7 @@ class _DetailPageState extends State<DetailPage> {
       setState(
         () {
           videoFile = File(pickedFile.path); //가져온 이미지를 _image에 저장
-          Navigator.of(context).push(MaterialPageRoute(
+          Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
               builder: (context) => VideoPlayerWidget(videoFile: videoFile)));
         },
       );
